@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'package:dartnissanconnectna/src/nissanconnect_response.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:dartnissanconnectna/src/nissanconnect_vehicle.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as nissanConnectHttp;
 
 class NissanConnectSession {
   final String baseUrl = "https://icm.infinitiusa.com/NissanLeafProd/rest/";
@@ -43,7 +43,7 @@ class NissanConnectSession {
     _print('Params: $params');
 
     Map<String, String> headers = Map();
-    headers["Content-Type"] = "application/json; charset=utf-8";
+    headers["Content-Type"] = "application/json";
     headers["API-Key"] = apiKey;
 
     if (authCookie != null) {
@@ -54,14 +54,14 @@ class NissanConnectSession {
       headers["Authorization"] = authToken;
     }
 
-    http.Response response;
+    nissanConnectHttp.Response response;
     switch(method) {
       case "GET":
-        response = await http.get("${baseUrl}${endpoint}",
+        response = await nissanConnectHttp.get("${baseUrl}${endpoint}",
             headers: headers);
         break;
       default:
-        response = await http.post("${baseUrl}${endpoint}",
+        response = await nissanConnectHttp.post("${baseUrl}${endpoint}",
             headers: headers, body: json.encode(params));
     }
 
@@ -92,8 +92,8 @@ class NissanConnectSession {
     vehicles = List<NissanConnectVehicle>();
 
     for (Map vehicle in response.body["vehicles"]) {
-      vehicles.add(NissanConnectVehicle(
-          vehicle["uvi"], vehicle["modelyear"], vehicle["nickname"], this));
+      vehicles.add(new NissanConnectVehicle(this,
+          vehicle["uvi"], vehicle["modelyear"], vehicle["nickname"]));
     }
 
     return vehicle = vehicles.first;

@@ -1,14 +1,12 @@
 import 'package:dartnissanconnectna/dartnissanconnectna.dart';
-import 'package:dartnissanconnectna/src/nissanconnect_battery.dart';
 
 class NissanConnectVehicle {
+  NissanConnectSession session;
   var vin;
   var modelYear;
   var nickname;
 
-  NissanConnectSession session;
-
-  NissanConnectVehicle(this.vin, this.modelYear, this.nickname, this.session);
+  NissanConnectVehicle(this.session, this.vin, this.modelYear, this.nickname);
 
   Future<NissanConnectBattery> requestBatteryStatus() async {
     var response =

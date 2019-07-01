@@ -48,6 +48,9 @@ class NissanConnectBattery {
         numberFormat.format(recs['cruisingRangeAcOn'] / 1000) + ' km';
     this.cruisingRangeAcOnMiles =
         numberFormat.format(recs['cruisingRangeAcOn'] * 0.0006213712) + ' mi';
+    this.timeToFullTrickle = new Duration(hours: 0, minutes: 0);
+    this.timeToFullL2 = new Duration(hours: 0, minutes: 0);
+    this.timeToFullL2_6kw = new Duration(hours: 0, minutes: 0);
     if (recs['timeRequired'] != null) {
       this.timeToFullTrickle = new Duration(
           hours: recs['timeRequired']['hourRequiredToFull'] ?? 0,
