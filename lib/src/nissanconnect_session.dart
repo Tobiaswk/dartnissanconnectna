@@ -2,7 +2,7 @@ import 'package:dartnissanconnectna/src/nissanconnect_response.dart';
 import 'package:dartnissanconnectna/src/nissanconnect_vehicle.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as nissanConnectHttp;
+import 'package:http/http.dart' as http;
 
 class NissanConnectSession {
   final String baseUrl = "https://icm.infinitiusa.com/NissanLeafProd/rest/";
@@ -21,24 +21,27 @@ class NissanConnectSession {
 
   NissanConnectSession({this.debug = false});
 
-  Future<NissanConnectResponse> requestWithRetry({String endpoint, String method = "POST", Map params}) async {
-    NissanConnectResponse response = await request(endpoint: endpoint, method: method, params: params);
+  Future<NissanConnectResponse> requestWithRetry(
+      {String endpoint, String method = "POST", Map params}) async {
+    NissanConnectResponse response =
+        await request(endpoint: endpoint, method: method, params: params);
 
     var status = response.statusCode;
 
     if (status != null && status >= 400) {
-      _print('NissanConnect API; logging in and trying request again: $response');
+      _print(
+          'NissanConnect API; logging in and trying request again: $response');
 
-      await login(
-          username: username,
-          password: password);
+      await login(username: username, password: password);
 
-      response = await request(endpoint: endpoint, method: method, params: params);
+      response =
+          await request(endpoint: endpoint, method: method, params: params);
     }
     return response;
   }
 
-  Future<NissanConnectResponse> request({String endpoint, String method = "POST", Map params}) async {
+  Future<NissanConnectResponse> request(
+      {String endpoint, String method = "POST", Map params}) async {
     _print('Invoking NissanConnect API: $endpoint');
     _print('Params: $params');
 
@@ -54,14 +57,15 @@ class NissanConnectSession {
       headers["Authorization"] = authToken;
     }
 
-    nissanConnectHttp.Response response;
-    switch(method) {
+    _print('Headers: $headers');
+
+    http.Response response;
+    switch (method) {
       case "GET":
-        response = await nissanConnectHttp.get("${baseUrl}${endpoint}",
-            headers: headers);
+        response = await http.get("${baseUrl}${endpoint}", headers: headers);
         break;
       default:
-        response = await nissanConnectHttp.post("${baseUrl}${endpoint}",
+        response = await http.post("${baseUrl}${endpoint}",
             headers: headers, body: json.encode(params));
     }
 
@@ -69,14 +73,16 @@ class NissanConnectSession {
 
     _print('result: $jsonData');
 
-    return NissanConnectResponse(response.statusCode, response.headers, jsonData);
+    return NissanConnectResponse(
+        response.statusCode, response.headers, jsonData);
   }
 
   Future<NissanConnectVehicle> login({String username, String password}) async {
     this.username = username;
     this.password = password;
 
-    NissanConnectResponse response = await request(endpoint: "auth/authenticationForAAS", params: {
+    NissanConnectResponse response =
+        await request(endpoint: "auth/authenticationForAAS", params: {
       "authenticate": {
         "userid": username,
         "password": password,
@@ -92,8 +98,8 @@ class NissanConnectSession {
     vehicles = List<NissanConnectVehicle>();
 
     for (Map vehicle in response.body["vehicles"]) {
-      vehicles.add(new NissanConnectVehicle(this,
-          vehicle["uvi"], vehicle["modelyear"], vehicle["nickname"]));
+      vehicles.add(new NissanConnectVehicle(
+          this, vehicle["uvi"], vehicle["modelyear"], vehicle["nickname"]));
     }
 
     return vehicle = vehicles.first;
