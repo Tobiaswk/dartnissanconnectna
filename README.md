@@ -11,9 +11,9 @@ A simple usage example:
     import 'package:dartnissanconnectna/dartnissanconnectna.dart';
 
     main() {
-      NissanConnectSession connectSession = new NissanConnectSession(debug: true);
+      NissanConnectSession session = new NissanConnectSession(debug: true);
 
-      connectSession.login(username: "username", password: "password").then((vehicle) {
+      session.login(username: "username", password: "password").then((vehicle) {
         print(vehicle.vin);
         print(vehicle.modelYear);
         print(vehicle.nickname);
