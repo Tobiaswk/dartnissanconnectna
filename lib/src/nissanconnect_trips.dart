@@ -27,7 +27,8 @@ class NissanConnectTrips {
         NissanConnectTripDetail connectTripDetail =
             new NissanConnectTripDetail();
         connectTripDetail.tripId = tripDetail['tripId'];
-        connectTripDetail.co2ReductionKg = "${tripDetail['cO2Reduction']} kg CO2";
+        connectTripDetail.co2ReductionKg =
+            "${tripDetail['cO2Reduction']} kg CO2";
         connectTripDetail.milesPerKWh = unitCalculator.milesPerKWhPretty(
                 double.parse(tripDetail['powerConsumptTotal']),
                 double.parse(tripDetail['travelDistance'])) +
@@ -58,24 +59,27 @@ class NissanConnectTrips {
             ' km';
 
         totalCo2reductionKg += int.parse(tripDetail['cO2Reduction']);
-        totalWhUsed +=
-            double.parse(tripDetail['powerConsumptTotal']);
-        totalTravelDistanceMeters +=
-            double.parse(tripDetail['travelDistance']);
+        totalWhUsed += double.parse(tripDetail['powerConsumptTotal']);
+        totalTravelDistanceMeters += double.parse(tripDetail['travelDistance']);
 
         nissanConnectTrip.tripDetails.add(connectTripDetail);
       }
 
       nissanConnectTrip.co2reductionKg = "${totalCo2reductionKg} CO2 kg";
-      nissanConnectTrip.milesPerKWh =
-          unitCalculator.milesPerKWhPretty(totalWhUsed, totalTravelDistanceMeters) + ' miles/kWh';
-      nissanConnectTrip.kWhPerMiles =
-          unitCalculator.kWhPerMilesPretty(totalWhUsed, totalTravelDistanceMeters) + ' kWh/miles';
-      nissanConnectTrip.kilometersPerKWh =
-          unitCalculator.kilometersPerKWhPretty(totalWhUsed, totalTravelDistanceMeters) + ' km/kWh';
-      nissanConnectTrip.kWhPerKilometers =
-          unitCalculator.kWhPerKilometersPretty(totalWhUsed, totalTravelDistanceMeters) + ' kWh/km';
-      nissanConnectTrip.kWhUsed = unitCalculator.WhtoKWhPretty(totalWhUsed) + ' kWh';
+      nissanConnectTrip.milesPerKWh = unitCalculator.milesPerKWhPretty(
+              totalWhUsed, totalTravelDistanceMeters) +
+          ' miles/kWh';
+      nissanConnectTrip.kWhPerMiles = unitCalculator.kWhPerMilesPretty(
+              totalWhUsed, totalTravelDistanceMeters) +
+          ' kWh/miles';
+      nissanConnectTrip.kilometersPerKWh = unitCalculator
+              .kilometersPerKWhPretty(totalWhUsed, totalTravelDistanceMeters) +
+          ' km/kWh';
+      nissanConnectTrip.kWhPerKilometers = unitCalculator
+              .kWhPerKilometersPretty(totalWhUsed, totalTravelDistanceMeters) +
+          ' kWh/km';
+      nissanConnectTrip.kWhUsed =
+          unitCalculator.WhtoKWhPretty(totalWhUsed) + ' kWh';
       nissanConnectTrip.travelDistanceMiles =
           unitCalculator.toMilesPretty(totalTravelDistanceMeters) + ' miles';
       nissanConnectTrip.travelDistanceKilometers =

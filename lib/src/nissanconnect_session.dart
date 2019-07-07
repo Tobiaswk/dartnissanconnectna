@@ -99,7 +99,11 @@ class NissanConnectSession {
 
     for (Map vehicle in response.body["vehicles"]) {
       vehicles.add(new NissanConnectVehicle(
-          this, vehicle["uvi"], vehicle["modelyear"], vehicle["nickname"]));
+          this,
+          vehicle["uvi"],
+          vehicle["modelyear"],
+          vehicle["nickname"],
+          vehicle['interiorTempRecords']['inc_temp']));
     }
 
     return vehicle = vehicles.first;
