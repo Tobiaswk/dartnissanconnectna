@@ -1,3 +1,4 @@
+import 'package:dartnissanconnectna/src/unit_calculator.dart';
 import 'package:intl/intl.dart';
 
 class NissanConnectBattery {
@@ -22,6 +23,8 @@ class NissanConnectBattery {
   String chargingRemainingText;
 
   NissanConnectBattery(Map params) {
+    UnitCalculator unitCalculator = new UnitCalculator();
+
     var recs = params["batteryRecords"];
     var bs = recs['batteryStatus'];
     this.dateTime = new DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
@@ -40,14 +43,18 @@ class NissanConnectBattery {
       this.batteryPercentage =
           new NumberFormat('0.0').format(SOC).toString() + '%';
     }
-    this.cruisingRangeAcOffKm =
-        numberFormat.format(recs['cruisingRangeAcOff'] / 1000) + ' km';
-    this.cruisingRangeAcOffMiles =
-        numberFormat.format(recs['cruisingRangeAcOff'] * 0.0006213712) + ' mi';
-    this.cruisingRangeAcOnKm =
-        numberFormat.format(recs['cruisingRangeAcOn'] / 1000) + ' km';
+    this.cruisingRangeAcOffKm = numberFormat
+            .format(unitCalculator.toKilometers(recs['cruisingRangeAcOff'])) +
+        ' km';
+    this.cruisingRangeAcOffMiles = numberFormat
+            .format(unitCalculator.toMiles(recs['cruisingRangeAcOff'])) +
+        ' mi';
+    this.cruisingRangeAcOnKm = numberFormat
+            .format(unitCalculator.toKilometers(recs['cruisingRangeAcOn'])) +
+        ' km';
     this.cruisingRangeAcOnMiles =
-        numberFormat.format(recs['cruisingRangeAcOn'] * 0.0006213712) + ' mi';
+        numberFormat.format(unitCalculator.toMiles(recs['cruisingRangeAcOn'])) +
+            ' mi';
     this.timeToFullTrickle = new Duration(hours: 0, minutes: 0);
     this.timeToFullL2 = new Duration(hours: 0, minutes: 0);
     this.timeToFullL2_6kw = new Duration(hours: 0, minutes: 0);
