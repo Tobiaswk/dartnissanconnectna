@@ -81,7 +81,7 @@ class NissanConnectVehicle {
           "executionTime": _executionTimeFormatter.format(date.toUtc())
         });
 
-    return response.statusCode == 200;
+    return response.body['messageDeliveryStatus'] == 'Success';
   }
 
   Future<bool> requestClimateControlScheduledCancel() async {
@@ -89,14 +89,14 @@ class NissanConnectVehicle {
         endpoint: "hvacSchedule/vehicles/$vin/cancelHVACSchedule",
         method: "POST");
 
-    return response.statusCode == 200;
+    return response.body['messageDeliveryStatus'] == 'Success';
   }
 
   Future<bool> requestClimateControlOff() async {
     var response = await session.requestWithRetry(
         endpoint: "hvac/vehicles/$vin/deactivateHVAC", method: "POST");
 
-    return response.statusCode == 200;
+    return response.body['messageDeliveryStatus'] == 'Success';
   }
 
   Future<DateTime> requestClimateControlScheduled() async {
