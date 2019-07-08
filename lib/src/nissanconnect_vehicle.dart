@@ -104,7 +104,7 @@ class NissanConnectVehicle {
         endpoint: "hvacSchedule/vehicles/$vin/getHvacSchedule", method: "GET");
 
     return new DateFormat("yyyy-MM-dd'T'H:m:s")
-        .parse(response.body['executeTime']);
+        .parse(response.body['executeTime'], true);
   }
 
   Future<NissanConnectLocation> requestLocation(DateTime date) async {
