@@ -26,7 +26,7 @@ class NissanConnectTrips {
           ['priceSimulatorDetailInfoTrip']) {
         NissanConnectTripDetail connectTripDetail =
             new NissanConnectTripDetail();
-        connectTripDetail.tripId = tripDetail['tripId'];
+        connectTripDetail.tripId = int.parse(tripDetail['tripId']);
         connectTripDetail.co2ReductionKg =
             "${tripDetail['cO2Reduction']} kg CO2";
         connectTripDetail.milesPerKWh = unitCalculator.milesPerKWhPretty(

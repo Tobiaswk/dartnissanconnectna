@@ -17,7 +17,7 @@ class NissanConnectStats {
     UnitCalculator unitCalculator = new UnitCalculator();
 
     this.co2ReductionKg =
-        "${map['co2Reduction'] ?? map['cO2Reduction']} kg CO2";
+        "${map['co2Reduction'] ?? map['cO2Reduction']} kg";
     this.milesPerKWh = unitCalculator.milesPerKWhPretty(
             double.parse(map['powerConsumptTotal']),
             double.parse(map['travelDistance'])) +

@@ -57,10 +57,11 @@ class NissanConnectVehicle {
 
   Future<NissanConnectTrips> requestMonthlyStatisticsTrips(
       DateTime date) async {
+    // API weirdness; we offset by 30 days on date to get the correct month
     var response = await session.requestWithRetry(
         endpoint: "electricusage/vehicles/$vin/detailpriceSimulatordata",
         method: "POST",
-        params: {"Targetmonth": _targetMonthFormatter.format(date.toUtc())});
+        params: {"Targetmonth": _targetMonthFormatter.format(date.add(new Duration(days: 30)).toUtc())});
 
     return NissanConnectTrips(response.body);
   }
