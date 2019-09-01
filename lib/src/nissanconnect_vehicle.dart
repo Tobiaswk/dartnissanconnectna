@@ -41,13 +41,14 @@ class NissanConnectVehicle {
   }
 
   Future<NissanConnectStats> requestMonthlyStatistics(DateTime date) async {
+    // API weirdness; we offset by 1 day on date to get the correct date
     var response = await session.requestWithRetry(
         endpoint: "ecoDrive/vehicles/$vin/CarKarteGraphAllInfo",
         method: "POST",
         params: {
           "dateRangeLevel": "DAILY",
           "graphType": "ALL",
-          "targetMonth": _targetMonthFormatter.format(date.toUtc())
+          "targetMonth": _targetMonthFormatter.format(date.add(new Duration(days: 1)).toUtc())
         });
 
     return NissanConnectStats(
