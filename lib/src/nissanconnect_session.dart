@@ -69,9 +69,13 @@ class NissanConnectSession {
             headers: headers, body: json.encode(params));
     }
 
-    dynamic jsonData = json.decode(response.body);
-
-    _print('result: $jsonData');
+    dynamic jsonData;
+    try {
+      jsonData = json.decode(response.body);
+      _print('result: $jsonData');
+    } catch (e) {
+      _print('JSON decoding failed!');
+    }
 
     return NissanConnectResponse(
         response.statusCode, response.headers, jsonData);
