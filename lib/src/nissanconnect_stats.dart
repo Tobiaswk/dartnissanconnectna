@@ -21,11 +21,11 @@ class NissanConnectStats {
     this.milesPerKWh = unitCalculator.milesPerKWhPretty(
             double.parse(map['powerConsumptTotal']),
             double.parse(map['travelDistance'])) +
-        ' miles/kWh';
+        ' mi/kWh';
     this.kWhPerMiles = unitCalculator.kWhPerMilesPretty(
             double.parse(map['powerConsumptTotal']),
             double.parse(map['travelDistance'])) +
-        ' kWh/miles';
+        ' kWh/mi';
     this.kilometersPerKWh = unitCalculator.kilometersPerKWhPretty(
             double.parse(map['powerConsumptTotal']),
             double.parse(map['travelDistance'])) +
