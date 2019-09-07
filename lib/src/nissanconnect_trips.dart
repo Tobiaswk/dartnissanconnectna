@@ -32,7 +32,7 @@ class NissanConnectTrips {
         connectTripDetail.milesPerKWh = unitCalculator.milesPerKWhPretty(
                 double.parse(tripDetail['powerConsumptTotal']),
                 double.parse(tripDetail['travelDistance'])) +
-            ' mi/kWh';
+            ' miles/kWh';
         connectTripDetail.kWhPerMiles = unitCalculator.kWhPerMilesPretty(
                 double.parse(tripDetail['powerConsumptTotal']),
                 double.parse(tripDetail['travelDistance'])) +
@@ -56,7 +56,7 @@ class NissanConnectTrips {
                 ' km';
         connectTripDetail.travelDistanceMiles = unitCalculator
                 .toMilesPretty(double.parse(tripDetail['travelDistance'])) +
-            ' mi';
+            ' miles';
 
         totalCo2reductionKg += int.parse(tripDetail['cO2Reduction']);
         totalWhUsed += double.parse(tripDetail['powerConsumptTotal']);
@@ -68,7 +68,7 @@ class NissanConnectTrips {
       nissanConnectTrip.co2reductionKg = "${totalCo2reductionKg} CO2 kg";
       nissanConnectTrip.milesPerKWh = unitCalculator.milesPerKWhPretty(
               totalWhUsed, totalTravelDistanceMeters) +
-          ' mi/kWh';
+          ' miles/kWh';
       nissanConnectTrip.kWhPerMiles = unitCalculator.kWhPerMilesPretty(
               totalWhUsed, totalTravelDistanceMeters) +
           ' kWh/mi';
