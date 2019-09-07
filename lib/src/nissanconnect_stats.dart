@@ -42,7 +42,7 @@ class NissanConnectStats {
             ' km';
     this.travelDistanceMiles =
         unitCalculator.toMilesPretty(double.parse(map['travelDistance'])) +
-            ' miles';
+            ' mi';
     this.travelTime = Duration(seconds: int.parse(map['travelTime']));
     if (map['targetDate'] != null) {
       this.date = new DateFormat('yyyy-MM-dd').parse(map['targetDate'], true);

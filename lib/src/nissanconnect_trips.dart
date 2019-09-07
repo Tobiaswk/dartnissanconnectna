@@ -56,7 +56,7 @@ class NissanConnectTrips {
                 ' km';
         connectTripDetail.travelDistanceMiles = unitCalculator
                 .toMilesPretty(double.parse(tripDetail['travelDistance'])) +
-            ' miles';
+            ' mi';
 
         totalCo2reductionKg += int.parse(tripDetail['cO2Reduction']);
         totalWhUsed += double.parse(tripDetail['powerConsumptTotal']);
