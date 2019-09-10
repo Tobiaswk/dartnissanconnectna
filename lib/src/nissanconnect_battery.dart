@@ -28,7 +28,7 @@ class NissanConnectBattery {
     var recs = params["batteryRecords"];
     var bs = recs['batteryStatus'];
     this.dateTime = new DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        .parse(recs['lastUpdatedDateAndTime']);
+        .parse(recs['lastUpdatedDateAndTime'], true).toLocal();
     this.batteryLevelCapacity = bs['batteryCapacity'];
     this.batteryLevel = bs['batteryRemainingAmount'];
     this.isConnected = recs['pluginState'] != 'NOT_CONNECTED';

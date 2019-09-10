@@ -45,7 +45,7 @@ class NissanConnectStats {
             ' mi';
     this.travelTime = Duration(seconds: int.parse(map['travelTime']));
     if (map['targetDate'] != null) {
-      this.date = new DateFormat('yyyy-MM-dd').parse(map['targetDate'], true);
+      this.date = new DateFormat('yyyy-MM-dd').parse(map['targetDate'], true).toLocal();
     } else if (map['targetMonth'] != null) {
       // https://stackoverflow.com/questions/51042621/unable-to-covert-string-date-in-format-yyyymmddhhmmss-to-datetime-dart
       this.date = new DateFormat('yyyy.MM').parse(

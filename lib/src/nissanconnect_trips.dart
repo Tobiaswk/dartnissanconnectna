@@ -16,7 +16,7 @@ class NissanConnectTrips {
     for (Map trip in trips) {
       NissanConnectTrip nissanConnectTrip = new NissanConnectTrip();
       nissanConnectTrip.date =
-          new DateFormat('yyyy-MM-dd').parse(trip['targetDate'], true);
+          new DateFormat('yyyy-MM-dd').parse(trip['targetDate'], true).toLocal();
 
       double totalCo2reductionKg = 0;
       double totalWhUsed = 0;
