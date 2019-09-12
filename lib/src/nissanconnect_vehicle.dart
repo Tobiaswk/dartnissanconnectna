@@ -32,7 +32,7 @@ class NissanConnectVehicle {
         method: "POST",
         params: {
           "displayCondition": {
-            "TargetDate": _targetDateFormatter.format(date.toUtc())
+            "TargetDate": _targetDateFormatter.format(date)
           }
         });
 
@@ -40,14 +40,14 @@ class NissanConnectVehicle {
         response.body['personalData']['dateSummaryDetailInfo']);
   }
 
-  Future<NissanConnectStats> requestMonthlyStatistics(DateTime date) async {
+  Future<NissanConnectStats> requestMonthlyStatistics(DateTime month) async {
     var response = await session.requestWithRetry(
         endpoint: "ecoDrive/vehicles/$vin/CarKarteGraphAllInfo",
         method: "POST",
         params: {
           "dateRangeLevel": "DAILY",
           "graphType": "ALL",
-          "targetMonth": _targetMonthFormatter.format(date.toUtc())
+          "targetMonth": _targetMonthFormatter.format(month)
         });
 
     return NissanConnectStats(
@@ -56,12 +56,11 @@ class NissanConnectVehicle {
   }
 
   Future<NissanConnectTrips> requestMonthlyStatisticsTrips(
-      DateTime date) async {
+      DateTime month) async {
     var response = await session.requestWithRetry(
         endpoint: "electricusage/vehicles/$vin/detailpriceSimulatordata",
         method: "POST",
-        params: {"Targetmonth": _targetMonthFormatter.format(date.toUtc())});
-
+        params: {"Targetmonth": _targetMonthFormatter.format(month)});
     return NissanConnectTrips(response.body);
   }
 
