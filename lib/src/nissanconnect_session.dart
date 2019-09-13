@@ -107,7 +107,9 @@ class NissanConnectSession {
           vehicle["uvi"],
           vehicle["modelyear"],
           vehicle["nickname"],
-          vehicle['interiorTempRecords']['inc_temp']));
+          vehicle['interiorTempRecords'] != null
+              ? vehicle['interiorTempRecords']['inc_temp']
+              : null));
     }
 
     return vehicle = vehicles.first;
