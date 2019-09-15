@@ -81,7 +81,7 @@ class NissanConnectSession {
         response.statusCode, response.headers, jsonData);
   }
 
-  Future<NissanConnectVehicle> login({String username, String password}) async {
+  Future<NissanConnectVehicle> login({String username, String password, String countryCode = 'US'}) async {
     this.username = username;
     this.password = password;
 
@@ -92,7 +92,7 @@ class NissanConnectSession {
         "password": password,
         "brand-s": "N",
         "language-s": "en_US",
-        "country": "US"
+        "country": countryCode // ISO 3166-1 alpha-2 code
       }
     });
 
