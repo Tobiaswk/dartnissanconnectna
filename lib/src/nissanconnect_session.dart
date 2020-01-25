@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NissanConnectSession {
-  final String baseUrl = "https://icm.infinitiusa.com/NissanLeafProd/rest/";
-  final String apiKey = "f950a00e-73a5-11e7-8cf7-a6006ad3dba0";
+  final String baseUrl = 'https://icm.infinitiusa.com/NissanLeafProd/rest/';
+  final String apiKey = 'f950a00e-73a5-11e7-8cf7-a6006ad3dba0';
 
   bool debug;
   List<String> debugLog = List<String>();
@@ -22,7 +22,7 @@ class NissanConnectSession {
   NissanConnectSession({this.debug = false});
 
   Future<NissanConnectResponse> requestWithRetry(
-      {String endpoint, String method = "POST", Map params}) async {
+      {String endpoint, String method = 'POST', Map params}) async {
     NissanConnectResponse response =
         await request(endpoint: endpoint, method: method, params: params);
 
@@ -41,31 +41,31 @@ class NissanConnectSession {
   }
 
   Future<NissanConnectResponse> request(
-      {String endpoint, String method = "POST", Map params}) async {
+      {String endpoint, String method = 'POST', Map params}) async {
     _print('Invoking NissanConnect API: $endpoint');
     _print('Params: $params');
 
     Map<String, String> headers = Map();
-    headers["Content-Type"] = "application/json";
-    headers["API-Key"] = apiKey;
+    headers['Content-Type'] = 'application/json';
+    headers['API-Key'] = apiKey;
 
     if (authCookie != null) {
-      headers["Cookie"] = authCookie;
+      headers['Cookie'] = authCookie;
     }
 
     if (authToken != null) {
-      headers["Authorization"] = authToken;
+      headers['Authorization'] = authToken;
     }
 
     _print('Headers: $headers');
 
     http.Response response;
     switch (method) {
-      case "GET":
-        response = await http.get("${baseUrl}${endpoint}", headers: headers);
+      case 'GET':
+        response = await http.get('${baseUrl}${endpoint}', headers: headers);
         break;
       default:
-        response = await http.post("${baseUrl}${endpoint}",
+        response = await http.post('${baseUrl}${endpoint}',
             headers: headers, body: json.encode(params));
     }
 
@@ -81,32 +81,33 @@ class NissanConnectSession {
         response.statusCode, response.headers, jsonData);
   }
 
-  Future<NissanConnectVehicle> login({String username, String password, String countryCode = 'US'}) async {
+  Future<NissanConnectVehicle> login(
+      {String username, String password, String countryCode = 'US'}) async {
     this.username = username;
     this.password = password;
 
     NissanConnectResponse response =
-        await request(endpoint: "auth/authenticationForAAS", params: {
-      "authenticate": {
-        "userid": username,
-        "password": password,
-        "brand-s": "N",
-        "language-s": "en_US",
-        "country": countryCode // ISO 3166-1 alpha-2 code
+        await request(endpoint: 'auth/authenticationForAAS', params: {
+      'authenticate': {
+        'userid': username,
+        'password': password,
+        'brand-s': 'N',
+        'language-s': 'en_US',
+        'country': countryCode // ISO 3166-1 alpha-2 code
       }
     });
 
-    this.authCookie = response.headers["set-cookie"];
-    this.authToken = response.body["authToken"];
+    this.authCookie = response.headers['set-cookie'];
+    this.authToken = response.body['authToken'];
 
     vehicles = List<NissanConnectVehicle>();
 
-    for (Map vehicle in response.body["vehicles"]) {
-      vehicles.add(new NissanConnectVehicle(
+    for (Map vehicle in response.body['vehicles']) {
+      vehicles.add(NissanConnectVehicle(
           this,
-          vehicle["uvi"],
-          vehicle["modelyear"],
-          vehicle["nickname"],
+          vehicle['uvi'],
+          vehicle['modelyear'],
+          vehicle['nickname'],
           vehicle['interiorTempRecords'] != null
               ? vehicle['interiorTempRecords']['inc_temp']
               : null));

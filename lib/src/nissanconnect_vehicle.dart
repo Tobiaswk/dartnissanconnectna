@@ -5,9 +5,9 @@ import 'package:dartnissanconnectna/src/nissanconnect_trips.dart';
 import 'package:intl/intl.dart';
 
 class NissanConnectVehicle {
-  var _targetDateFormatter = new DateFormat('yyyy-MM-dd');
-  var _targetMonthFormatter = new DateFormat('yyyyMM');
-  var _executionTimeFormatter = new DateFormat("yyyy-MM-dd'T'H:m:s'Z'");
+  var _targetDateFormatter = DateFormat('yyyy-MM-dd');
+  var _targetMonthFormatter = DateFormat('yyyyMM');
+  var _executionTimeFormatter = DateFormat("yyyy-MM-dd'T'H:m:s'Z'");
 
   NissanConnectSession session;
   var vin;
@@ -20,20 +20,18 @@ class NissanConnectVehicle {
 
   Future<NissanConnectBattery> requestBatteryStatus() async {
     var response = await session.requestWithRetry(
-        endpoint: "battery/vehicles/$vin/getChargingStatusRequest",
-        method: "GET");
+        endpoint: 'battery/vehicles/$vin/getChargingStatusRequest',
+        method: 'GET');
 
     return NissanConnectBattery(response.body);
   }
 
   Future<NissanConnectStats> requestDailyStatistics(DateTime date) async {
     var response = await session.requestWithRetry(
-        endpoint: "ecoDrive/vehicles/$vin/driveHistoryRecords",
-        method: "POST",
+        endpoint: 'ecoDrive/vehicles/$vin/driveHistoryRecords',
+        method: 'POST',
         params: {
-          "displayCondition": {
-            "TargetDate": _targetDateFormatter.format(date)
-          }
+          'displayCondition': {'TargetDate': _targetDateFormatter.format(date)}
         });
 
     return NissanConnectStats(
@@ -42,12 +40,12 @@ class NissanConnectVehicle {
 
   Future<NissanConnectStats> requestMonthlyStatistics(DateTime month) async {
     var response = await session.requestWithRetry(
-        endpoint: "ecoDrive/vehicles/$vin/CarKarteGraphAllInfo",
-        method: "POST",
+        endpoint: 'ecoDrive/vehicles/$vin/CarKarteGraphAllInfo',
+        method: 'POST',
         params: {
-          "dateRangeLevel": "DAILY",
-          "graphType": "ALL",
-          "targetMonth": _targetMonthFormatter.format(month)
+          'dateRangeLevel': 'DAILY',
+          'graphType': 'ALL',
+          'targetMonth': _targetMonthFormatter.format(month)
         });
 
     return NissanConnectStats(
@@ -58,26 +56,26 @@ class NissanConnectVehicle {
   Future<NissanConnectTrips> requestMonthlyStatisticsTrips(
       DateTime month) async {
     var response = await session.requestWithRetry(
-        endpoint: "electricusage/vehicles/$vin/detailpriceSimulatordata",
-        method: "POST",
-        params: {"Targetmonth": _targetMonthFormatter.format(month)});
+        endpoint: 'electricusage/vehicles/$vin/detailpriceSimulatordata',
+        method: 'POST',
+        params: {'Targetmonth': _targetMonthFormatter.format(month)});
     return NissanConnectTrips(response.body);
   }
 
   Future<bool> requestChargingStart() async {
     var response = await session.requestWithRetry(
-        endpoint: "battery/vehicles/$vin/remoteChargingRequest",
-        method: "POST");
+        endpoint: 'battery/vehicles/$vin/remoteChargingRequest',
+        method: 'POST');
 
     return response.statusCode == 200;
   }
 
   Future<bool> requestClimateControlOn(DateTime date) async {
     var response = await session.requestWithRetry(
-        endpoint: "hvac/vehicles/$vin/activateHVAC",
-        method: "POST",
+        endpoint: 'hvac/vehicles/$vin/activateHVAC',
+        method: 'POST',
         params: {
-          "executionTime": _executionTimeFormatter.format(date.toUtc())
+          'executionTime': _executionTimeFormatter.format(date.toUtc())
         });
 
     return response.body['messageDeliveryStatus'] == 'Success';
@@ -85,38 +83,39 @@ class NissanConnectVehicle {
 
   Future<bool> requestClimateControlScheduledCancel() async {
     var response = await session.requestWithRetry(
-        endpoint: "hvacSchedule/vehicles/$vin/cancelHVACSchedule",
-        method: "POST");
+        endpoint: 'hvacSchedule/vehicles/$vin/cancelHVACSchedule',
+        method: 'POST');
 
     return response.body['messageDeliveryStatus'] == 'Success';
   }
 
   Future<bool> requestClimateControlOff() async {
     var response = await session.requestWithRetry(
-        endpoint: "hvac/vehicles/$vin/deactivateHVAC", method: "POST");
+        endpoint: 'hvac/vehicles/$vin/deactivateHVAC', method: 'POST');
 
     return response.body['messageDeliveryStatus'] == 'Success';
   }
 
   Future<DateTime> requestClimateControlScheduled() async {
     var response = await session.requestWithRetry(
-        endpoint: "hvacSchedule/vehicles/$vin/getHvacSchedule", method: "GET");
+        endpoint: 'hvacSchedule/vehicles/$vin/getHvacSchedule', method: 'GET');
 
-    return new DateFormat("yyyy-MM-dd'T'H:m:s")
-        .parse(response.body['executeTime'], true).toLocal();
+    return DateFormat("yyyy-MM-dd'T'H:m:s")
+        .parse(response.body['executeTime'], true)
+        .toLocal();
   }
 
   Future<NissanConnectLocation> requestLocation(DateTime date) async {
     var response = await session.requestWithRetry(
-        endpoint: "vehicleLocator/vehicles/$vin/refreshVehicleLocator",
-        method: "POST",
+        endpoint: 'vehicleLocator/vehicles/$vin/refreshVehicleLocator',
+        method: 'POST',
         params: {
-          "acquiredDataUpperLimit": "1",
-          "searchPeriod":
-              "${new DateFormat('yyyyMMdd').format(date.subtract(new Duration(days: 30)))},${new DateFormat('yyyyMMdd').format(date)}",
-          "serviceName": "MyCarFinderResult"
+          'acquiredDataUpperLimit': '1',
+          'searchPeriod':
+              '${DateFormat('yyyyMMdd').format(date.subtract(Duration(days: 30)))},${DateFormat('yyyyMMdd').format(date)}',
+          'serviceName': 'MyCarFinderResult'
         });
 
-    return new NissanConnectLocation(response.body);
+    return NissanConnectLocation(response.body);
   }
 }
