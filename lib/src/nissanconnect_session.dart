@@ -42,7 +42,6 @@ class NissanConnectSession {
 
   Future<NissanConnectResponse> request(
       {String endpoint, String method = 'POST', Map params}) async {
-    _print('------------------------------------');
     _print('Invoking NissanConnect API: $endpoint');
     _print('Params: $params');
 
@@ -77,8 +76,6 @@ class NissanConnectSession {
     } catch (e) {
       _print('JSON decoding failed!');
     }
-
-    _print('------------------------------------');
 
     return NissanConnectResponse(
         response.statusCode, response.headers, jsonData);
@@ -121,8 +118,8 @@ class NissanConnectSession {
 
   _print(message) {
     if (debug) {
-      print(message);
-      debugLog.add(message);
+      print('\$ $message');
+      debugLog.add('\$ $message');
     }
   }
 }
