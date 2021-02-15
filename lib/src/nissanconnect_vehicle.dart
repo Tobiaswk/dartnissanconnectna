@@ -13,10 +13,12 @@ class NissanConnectVehicle {
   var vin;
   var modelYear;
   var nickname;
-  var incTemperature;
+  double incTemperature;
 
-  NissanConnectVehicle(this.session, this.vin, this.modelYear, this.nickname,
-      this.incTemperature);
+  NissanConnectVehicle(
+      this.session, this.vin, this.modelYear, this.nickname, incTemperature) {
+    this.incTemperature = incTemperature != null ? double.parse(incTemperature) : null;
+  }
 
   Future<NissanConnectBattery> requestBatteryStatus() async {
     var response = await session.requestWithRetry(
