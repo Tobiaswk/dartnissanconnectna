@@ -5,11 +5,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NissanConnectSession {
-  final String baseUrl = 'https://icm.infinitiusa.com/NissanLeafProd/rest/';
-  final String apiKey = 'f950a00e-73a5-11e7-8cf7-a6006ad3dba0';
+  final String baseUrl =
+      'https://icm-infinitiusa.na.nissancloud.com/NissanLeafProd/rest/';
+  final String apiKey = '9df13434-5c4c-4bd2-a1a6-7759ccec93ae';
 
   bool debug;
-  List<String> debugLog = List<String>();
+  List<String> debugLog = <String>[];
 
   var username;
   var password;
@@ -42,7 +43,7 @@ class NissanConnectSession {
 
   Future<NissanConnectResponse> request(
       {String endpoint, String method = 'POST', Map params}) async {
-    _print('Invoking NissanConnect API: $endpoint');
+    _print('Invoking NissanConnect (NA) API: $endpoint');
     _print('Params: $params');
 
     Map<String, String> headers = Map();
@@ -97,10 +98,17 @@ class NissanConnectSession {
       }
     });
 
-    this.authCookie = response.headers['set-cookie'];
+    // For some reason unbeknownst the set-cookie contains key-value pairs
+    // that should not be used in the Cookie header (if present requests fails)
+    // We remove these key-value pairs manually
+    this.authCookie = response.headers['set-cookie']
+        .replaceAll(RegExp(r' Expires=.*?;'), '')
+        .replaceAll(RegExp(r' Path=.*?;'), '')
+        .replaceAll('SameSite=None,', '');
+
     this.authToken = response.body['authToken'];
 
-    vehicles = List<NissanConnectVehicle>();
+    vehicles = <NissanConnectVehicle>[];
 
     for (Map vehicle in response.body['vehicles']) {
       vehicles.add(NissanConnectVehicle(
