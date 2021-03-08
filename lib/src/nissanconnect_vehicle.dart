@@ -17,7 +17,8 @@ class NissanConnectVehicle {
 
   NissanConnectVehicle(
       this.session, this.vin, this.modelYear, this.nickname, incTemperature) {
-    this.incTemperature = incTemperature != null ? double.parse(incTemperature) : null;
+    this.incTemperature =
+        incTemperature != null ? double.parse(incTemperature) : null;
   }
 
   Future<NissanConnectBattery> requestBatteryStatus() async {
