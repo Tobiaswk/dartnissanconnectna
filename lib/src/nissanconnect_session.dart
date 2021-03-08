@@ -101,12 +101,12 @@ class NissanConnectSession {
     // For some reason unbeknownst the set-cookie contains key-value pairs
     // that should not be used in the Cookie header (if present requests fails)
     // We remove these key-value pairs manually
-    this.authCookie = response.headers['set-cookie']
+    authCookie = response.headers['set-cookie']
         .replaceAll(RegExp(r' Expires=.*?;'), '')
         .replaceAll(RegExp(r' Path=.*?;'), '')
         .replaceAll('SameSite=None,', '');
 
-    this.authToken = response.body['authToken'];
+    authToken = response.body['authToken'];
 
     vehicles = <NissanConnectVehicle>[];
 
