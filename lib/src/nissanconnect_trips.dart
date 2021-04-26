@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 class NissanConnectTrips {
   UnitCalculator unitCalculator = UnitCalculator();
-  List<NissanConnectTrip> trips = List();
+  List<NissanConnectTrip> trips = [];
 
   NissanConnectTrips(Map map) {
     List trips = map['priceSimulatorDetailInfoResponsePersonalData']

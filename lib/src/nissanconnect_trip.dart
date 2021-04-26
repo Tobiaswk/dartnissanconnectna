@@ -1,15 +1,15 @@
 import 'package:dartnissanconnectna/src/nissanconnect_trip_detail.dart';
 
 class NissanConnectTrip {
-  DateTime date;
-  String co2reductionKg;
-  String milesPerKWh;
-  String kilometersPerKWh;
-  String kWhPerMiles;
-  String kWhPerKilometers;
-  String kWhUsed;
-  String travelDistanceMiles;
-  String travelDistanceKilometers;
+  late DateTime date;
+  late String co2reductionKg;
+  late String milesPerKWh;
+  late String kilometersPerKWh;
+  late String kWhPerMiles;
+  late String kWhPerKilometers;
+  late String kWhUsed;
+  late String travelDistanceMiles;
+  late String travelDistanceKilometers;
 
-  List<NissanConnectTripDetail> tripDetails = List();
+  List<NissanConnectTripDetail> tripDetails = [];
 }

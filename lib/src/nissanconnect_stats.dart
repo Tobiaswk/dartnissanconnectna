@@ -2,16 +2,16 @@ import 'package:dartnissanconnectna/src/unit_calculator.dart';
 import 'package:intl/intl.dart';
 
 class NissanConnectStats {
-  DateTime date;
-  String co2ReductionKg;
-  String milesPerKWh;
-  String kilometersPerKWh;
-  String kWhPerMiles;
-  String kWhPerKilometers;
-  String kWhUsed;
-  String travelDistanceMiles;
-  String travelDistanceKilometers;
-  Duration travelTime;
+  late DateTime date;
+  late String co2ReductionKg;
+  late String milesPerKWh;
+  late String kilometersPerKWh;
+  late String kWhPerMiles;
+  late String kWhPerKilometers;
+  late String kWhUsed;
+  late String travelDistanceMiles;
+  late String travelDistanceKilometers;
+  late Duration travelTime;
 
   NissanConnectStats(Map map) {
     UnitCalculator unitCalculator = UnitCalculator();
