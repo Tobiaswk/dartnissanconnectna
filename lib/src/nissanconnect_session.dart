@@ -10,20 +10,20 @@ class NissanConnectSession {
   final String apiKey = '9df13434-5c4c-4bd2-a1a6-7759ccec93ae';
 
   bool debug;
-  List<String> debugLog = <String>[];
+  List<String> debugLog = [];
 
   var username;
   var password;
   var authToken;
   var authCookie;
 
-  NissanConnectVehicle vehicle;
-  List<NissanConnectVehicle> vehicles;
+  late NissanConnectVehicle vehicle;
+  List<NissanConnectVehicle> vehicles = [];
 
   NissanConnectSession({this.debug = false});
 
   Future<NissanConnectResponse> requestWithRetry(
-      {String endpoint, String method = 'POST', Map params}) async {
+      {required String endpoint, String method = 'POST', Map? params}) async {
     NissanConnectResponse response =
         await request(endpoint: endpoint, method: method, params: params);
 
@@ -42,7 +42,7 @@ class NissanConnectSession {
   }
 
   Future<NissanConnectResponse> request(
-      {String endpoint, String method = 'POST', Map params}) async {
+      {required String endpoint, String method = 'POST', Map? params}) async {
     _print('Invoking NissanConnect (NA) API: $endpoint');
     _print('Params: $params');
 
@@ -63,10 +63,11 @@ class NissanConnectSession {
     http.Response response;
     switch (method) {
       case 'GET':
-        response = await http.get('${baseUrl}${endpoint}', headers: headers);
+        response = await http.get(Uri.parse('${baseUrl}${endpoint}'),
+            headers: headers);
         break;
       default:
-        response = await http.post('${baseUrl}${endpoint}',
+        response = await http.post(Uri.parse('${baseUrl}${endpoint}'),
             headers: headers, body: json.encode(params));
     }
 
@@ -83,7 +84,9 @@ class NissanConnectSession {
   }
 
   Future<NissanConnectVehicle> login(
-      {String username, String password, String countryCode = 'US'}) async {
+      {required String username,
+      required String password,
+      String countryCode = 'US'}) async {
     this.username = username;
     this.password = password;
 

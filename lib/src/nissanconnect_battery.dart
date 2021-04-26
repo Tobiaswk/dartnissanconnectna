@@ -4,23 +4,23 @@ import 'package:intl/intl.dart';
 class NissanConnectBattery {
   NumberFormat numberFormat = NumberFormat('0');
 
-  DateTime dateTime;
-  int batteryLevelCapacity;
-  int batteryLevel;
+  late DateTime dateTime;
+  late int batteryLevelCapacity;
+  late int batteryLevel;
   bool isConnected = false;
   bool isCharging = false;
-  String batteryPercentage;
-  String
+  late String batteryPercentage;
+  String?
       battery12thBar; // Leaf using 12th bar system; present as 12ths; 5/12 etc.
-  String cruisingRangeAcOffKm;
-  String cruisingRangeAcOffMiles;
-  String cruisingRangeAcOnKm;
-  String cruisingRangeAcOnMiles;
-  Duration timeToFullTrickle;
-  Duration timeToFullL2;
-  Duration timeToFullL2_6kw;
-  String chargingkWLevelText;
-  String chargingRemainingText;
+  late String cruisingRangeAcOffKm;
+  late String cruisingRangeAcOffMiles;
+  late String cruisingRangeAcOnKm;
+  late String cruisingRangeAcOnMiles;
+  late Duration timeToFullTrickle;
+  late Duration timeToFullL2;
+  late Duration timeToFullL2_6kw;
+  late String chargingkWLevelText;
+  late String chargingRemainingText;
 
   NissanConnectBattery(Map params) {
     UnitCalculator unitCalculator = UnitCalculator();

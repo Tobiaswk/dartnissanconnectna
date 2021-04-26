@@ -13,7 +13,7 @@ class NissanConnectVehicle {
   var vin;
   var modelYear;
   var nickname;
-  double incTemperature;
+  double? incTemperature;
 
   NissanConnectVehicle(
       this.session, this.vin, this.modelYear, this.nickname, incTemperature) {
