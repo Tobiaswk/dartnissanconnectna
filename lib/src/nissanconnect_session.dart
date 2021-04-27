@@ -18,7 +18,7 @@ class NissanConnectSession {
   var authCookie;
 
   late NissanConnectVehicle vehicle;
-  List<NissanConnectVehicle> vehicles = [];
+  late List<NissanConnectVehicle> vehicles;
 
   NissanConnectSession({this.debug = false});
 
