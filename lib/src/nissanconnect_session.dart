@@ -27,9 +27,7 @@ class NissanConnectSession {
     NissanConnectResponse response =
         await request(endpoint: endpoint, method: method, params: params);
 
-    var status = response.statusCode;
-
-    if (status != null && status >= 400) {
+    if (response.statusCode >= 400) {
       _print(
           'NissanConnect API; logging in and trying request again: $response');
 
