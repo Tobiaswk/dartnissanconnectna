@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 class NissanConnectVehicle {
   static final int BATTERY_STATUS_MAX_POLLING_RETRIES = 5;
+  static final int BATTERY_STATUS_AGE_IN_MINUTES = 5;
 
   var _targetDateFormatter = DateFormat('yyyy-MM-dd');
   var _targetMonthFormatter = DateFormat('yyyyMM');
@@ -34,7 +35,8 @@ class NissanConnectVehicle {
 
     var result = NissanConnectBattery(response.body);
 
-    while (now.difference(result.dateTime).inMinutes > 5 &&
+    while (now.difference(result.dateTime).inMinutes >
+            BATTERY_STATUS_AGE_IN_MINUTES &&
         pollingRetries-- > 0) result = await requestBatteryStatus();
 
     return result;
