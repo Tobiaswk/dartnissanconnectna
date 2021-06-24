@@ -5,6 +5,8 @@ import 'package:dartnissanconnectna/src/nissanconnect_trips.dart';
 import 'package:intl/intl.dart';
 
 class NissanConnectVehicle {
+  static final int BATTERY_STATUS_MAX_POLLING_RETRIES = 5;
+
   var _targetDateFormatter = DateFormat('yyyy-MM-dd');
   var _targetMonthFormatter = DateFormat('yyyyMM');
   var _executionTimeFormatter = DateFormat("yyyy-MM-dd'T'H:m:s'Z'");
@@ -26,7 +28,16 @@ class NissanConnectVehicle {
         endpoint: 'battery/vehicles/$vin/getChargingStatusRequest',
         method: 'GET');
 
-    return NissanConnectBattery(response.body);
+    var now = DateTime.now();
+
+    var pollingRetries = BATTERY_STATUS_MAX_POLLING_RETRIES;
+
+    var result = NissanConnectBattery(response.body);
+
+    while (now.difference(result.dateTime).inMinutes > 5 &&
+        pollingRetries-- > 0) result = await requestBatteryStatus();
+
+    return result;
   }
 
   Future<NissanConnectStats> requestDailyStatistics(DateTime date) async {
