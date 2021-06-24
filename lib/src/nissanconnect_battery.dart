@@ -76,15 +76,15 @@ class NissanConnectBattery {
     if (timeToFullTrickle.inHours != 0) {
       chargingkWLevelText = 'left to charge at ~1kW';
       chargingRemainingText =
-          '${timeToFullTrickle.inHours} hrs ${timeToFullTrickle.inMinutes / 60} mins';
+          '${timeToFullTrickle.inHours} hrs ${timeToFullTrickle.inMinutes % 60} mins';
     } else if (timeToFullL2.inHours != 0) {
       chargingkWLevelText = 'left to charge at ~3kW';
       chargingRemainingText =
-          '${timeToFullL2.inHours} hrs ${timeToFullL2.inMinutes / 60} mins';
+          '${timeToFullL2.inHours} hrs ${timeToFullL2.inMinutes % 60} mins';
     } else if (timeToFullL2_6kw.inHours != 0) {
       chargingkWLevelText = 'left to charge at ~6kW';
       chargingRemainingText =
-          '${timeToFullL2_6kw.inHours} hrs ${timeToFullL2_6kw.inMinutes / 60} mins';
+          '${timeToFullL2_6kw.inHours} hrs ${timeToFullL2_6kw.inMinutes % 60} mins';
     }
   }
 }
