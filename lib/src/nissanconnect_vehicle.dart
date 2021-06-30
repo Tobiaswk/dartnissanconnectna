@@ -33,14 +33,11 @@ class NissanConnectVehicle {
 
     var now = dateTime ?? DateTime.now();
 
-    var pollingRetries = retries;
-
     var result = NissanConnectBattery(response.body);
 
-    while (now.difference(result.dateTime).inMinutes >
+    if (now.difference(result.dateTime).inMinutes >
             BATTERY_STATUS_AGE_IN_MINUTES &&
-        pollingRetries-- > 0)
-      result = await requestBatteryStatus(dateTime, pollingRetries);
+        retries-- > 0) result = await requestBatteryStatus(dateTime, retries);
 
     return result;
   }
