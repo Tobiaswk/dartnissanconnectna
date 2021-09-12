@@ -1,13 +1,14 @@
-import 'package:dartnissanconnectna/src/nissanconnect_response.dart';
-import 'package:dartnissanconnectna/src/nissanconnect_vehicle.dart';
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:dartnissanconnectna/src/nissanconnect_response.dart';
+import 'package:dartnissanconnectna/src/nissanconnect_vehicle.dart';
 import 'package:http/http.dart' as http;
 
 class NissanConnectSession {
-  final String baseUrl =
-      'https://icm-infinitiusa.na.nissancloud.com/NissanLeafProd/rest/';
-  final String apiKey = '9df13434-5c4c-4bd2-a1a6-7759ccec93ae';
+  final String baseUrl = 'https://icm.infinitiusa.com/NissanEVProd/rest/';
+  final String apiKey =
+      'fBBQ6yMujXE/T9ZghOYDZgJQmnqg/1ECSn0kDso0Lo5sKdHUoN7Mlo8FYUH/EV3T';
 
   bool debug;
   List<String> debugLog = [];
