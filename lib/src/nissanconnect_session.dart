@@ -48,6 +48,8 @@ class NissanConnectSession {
     Map<String, String> headers = Map();
     headers['Content-Type'] = 'application/json';
     headers['API-Key'] = apiKey;
+    headers['User-Agent'] = // We spoof the user-agent
+        'Dalvik/2.1.0 (Linux; U; Android 10; BLA-L29 Build/HUAWEIBLA-L29S';
 
     if (authCookie != null) {
       headers['Cookie'] = authCookie;
@@ -89,8 +91,14 @@ class NissanConnectSession {
     this.username = username;
     this.password = password;
 
+    /// This is only called for getting the authentication cookie used in
+    /// the next request
     NissanConnectResponse response =
-        await request(endpoint: 'auth/authenticationForAAS', params: {
+        await request(endpoint: 'auth/getForceUpdateVersion', method: 'GET');
+
+    authCookie = response.headers['set-cookie'];
+
+    response = await request(endpoint: 'auth/authenticationForAAS', params: {
       'authenticate': {
         'userid': username,
         'password': password,
@@ -100,9 +108,9 @@ class NissanConnectSession {
       }
     });
 
-    // For some reason unbeknownst the set-cookie contains key-value pairs
-    // that should not be used in the Cookie header (if present requests fails)
-    // We remove these key-value pairs manually
+    /// For some reason unbeknownst the set-cookie contains key-value pairs
+    /// that should not be used in the Cookie header (if present requests fails)
+    /// We remove these key-value pairs manually
     authCookie = response.headers['set-cookie']
         .replaceAll(RegExp(r' Expires=.*?;'), '')
         .replaceAll(RegExp(r' Path=.*?;'), '')
