@@ -47,9 +47,10 @@ class NissanConnectSession {
 
     Map<String, String> headers = Map();
     headers['Content-Type'] = 'application/json';
-    headers['API-Key'] = apiKey;
+    headers['Api-Key'] = apiKey;
+    headers['Host'] = 'icm.infinitiusa.com';
     headers['User-Agent'] = // We spoof the user-agent
-        'Dalvik/2.1.0 (Linux; U; Android 10; BLA-L29 Build/HUAWEIBLA-L29S';
+        'Dalvik/2.1.0 (Linux; U; Android 10)';
 
     if (authCookie != null) {
       headers['Cookie'] = authCookie;
@@ -91,19 +92,13 @@ class NissanConnectSession {
     this.username = username;
     this.password = password;
 
-    /// This is only called for getting the authentication cookie used in
-    /// the next request
     NissanConnectResponse response =
-        await request(endpoint: 'auth/getForceUpdateVersion', method: 'GET');
-
-    authCookie = response.headers['set-cookie'];
-
-    response = await request(endpoint: 'auth/authenticationForAAS', params: {
+        await request(endpoint: 'auth/authenticationForAAS', params: {
       'authenticate': {
         'userid': username,
         'password': password,
         'brand-s': 'N',
-        'language-s': 'en_US',
+        'language-s': 'EN',
         'country': countryCode // ISO 3166-1 alpha-2 code
       }
     });
