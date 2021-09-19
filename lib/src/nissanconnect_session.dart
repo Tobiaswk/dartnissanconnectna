@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class NissanConnectSession {
   final String baseUrl = 'https://icm.infinitiusa.com/NissanEVProd/rest/';
   final String apiKey =
-      'fBBQ6yMujXE/T9ZghOYDZgJQmnqg/1ECSn0kDso0Lo5sKdHUoN7Mlo8FYUH/EV3T';
+      'bAwSKw0f+p0tG8astBGpvsXmgcWiVWLrh5ejIYg55D+jH1j1Oi3Hsqw21ri0XBJp';
 
   bool debug;
   List<String> debugLog = [];
@@ -50,7 +50,7 @@ class NissanConnectSession {
     headers['Api-Key'] = apiKey;
     headers['Host'] = 'icm.infinitiusa.com';
     headers['User-Agent'] = // We spoof the user-agent
-        'Dalvik/2.1.0 (Linux; U; Android 10)';
+        'NissanLeaf/7.2.4 CFNetwork/1312 Darwin/21.0.0';
 
     if (authCookie != null) {
       headers['Cookie'] = authCookie;
