@@ -13,10 +13,11 @@ class NissanConnectSession {
   bool debug;
   List<String> debugLog = [];
 
-  var username;
-  var password;
-  var authToken;
-  var authCookie;
+  String? username;
+  String? password;
+  String? authToken;
+  String? authCookie;
+  String? userAgent;
 
   late NissanConnectVehicle vehicle;
   late List<NissanConnectVehicle> vehicles;
@@ -32,7 +33,8 @@ class NissanConnectSession {
       _print(
           'NissanConnect API; logging in and trying request again: $response');
 
-      await login(username: username, password: password);
+      await login(
+          username: username!, password: password!, userAgent: userAgent);
 
       response =
           await request(endpoint: endpoint, method: method, params: params);
@@ -48,16 +50,17 @@ class NissanConnectSession {
     Map<String, String> headers = Map();
     headers['Content-Type'] = 'application/json';
     headers['Api-Key'] = apiKey;
-    headers['Host'] = 'icm.infinitiusa.com';
-    headers['User-Agent'] = // We spoof the user-agent
-        'Dalvik/2.1.0 (Linux; U; Android 10)';
+
+    if (userAgent != null) {
+      headers['User-Agent'] = userAgent!;
+    }
 
     if (authCookie != null) {
-      headers['Cookie'] = authCookie;
+      headers['Cookie'] = authCookie!;
     }
 
     if (authToken != null) {
-      headers['Authorization'] = authToken;
+      headers['Authorization'] = authToken!;
     }
 
     _print('Headers: $headers');
@@ -88,9 +91,11 @@ class NissanConnectSession {
   Future<NissanConnectVehicle> login(
       {required String username,
       required String password,
-      String countryCode = 'US'}) async {
+      String countryCode = 'US',
+      String? userAgent}) async {
     this.username = username;
     this.password = password;
+    this.userAgent = userAgent;
 
     NissanConnectResponse response =
         await request(endpoint: 'auth/authenticationForAAS', params: {
