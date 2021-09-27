@@ -6,9 +6,10 @@ import 'package:dartnissanconnectna/src/nissanconnect_vehicle.dart';
 import 'package:http/http.dart' as http;
 
 class NissanConnectSession {
-  final String baseUrl = 'https://icm.infinitiusa.com/NissanEVProd/rest/';
+  final String baseUrl =
+      'https://icm.infinitiusa.com/NissanConnectEVProd/rest/';
   final String apiKey =
-      'fBBQ6yMujXE/T9ZghOYDZgJQmnqg/1ECSn0kDso0Lo5sKdHUoN7Mlo8FYUH/EV3T';
+      'Z9bNvSz8NZf0J3fLhwA3U27G4HQpwMBMYPHd3B+uzeWstfRPEue8AoS/xjIz34k8';
 
   bool debug;
   List<String> debugLog = [];
