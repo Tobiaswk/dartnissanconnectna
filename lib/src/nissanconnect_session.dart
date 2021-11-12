@@ -10,6 +10,7 @@ class NissanConnectSession {
       'https://icm.infinitiusa.com/NissanConnectEVProd/rest/';
   final String apiKey =
       'Z9bNvSz8NZf0J3fLhwA3U27G4HQpwMBMYPHd3B+uzeWstfRPEue8AoS/xjIz34k8';
+  final String userAgentKey = 'pZiN3BSpfjtVulW6QB52Itw6rc5YEDZXKGlKzGsTvPY=';
 
   bool debug;
   List<String> debugLog = [];
@@ -51,6 +52,7 @@ class NissanConnectSession {
     Map<String, String> headers = Map();
     headers['Content-Type'] = 'application/json';
     headers['Api-Key'] = apiKey;
+    headers['User-Agent-Key'] = userAgentKey;
 
     if (userAgent != null) {
       headers['User-Agent'] = userAgent!;
