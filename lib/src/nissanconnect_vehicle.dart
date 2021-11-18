@@ -91,7 +91,9 @@ class NissanConnectVehicle {
         endpoint: 'hvac/vehicles/$vin/activateHVAC',
         method: 'POST',
         params: {
-          'executionTime': _executionTimeFormatter.format(date.toUtc())
+          'remoteHVAC': {
+            'executionTime': _executionTimeFormatter.format(date.toUtc())
+          }
         });
 
     return response.body['messageDeliveryStatus'] == 'Success';
