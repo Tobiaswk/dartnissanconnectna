@@ -10,7 +10,7 @@ class NissanConnectSession {
       'https://icm.infinitiusa.com/NissanConnectEVProd/rest/';
   final String apiKey =
       'bJG8LvpcRAAOrVQ8GByIzWkR4n993iccFtKNs1sn+gheOFGnT6ABaR6cvclCXetW';
-  final String userAgentKey = 'pZiN3BSpfjtVulW6QB52Itw6rc5YEDZXKGlKzGsTvPY=';
+  final String userAgentKey = 'zoJ0paOf/bCLNirsZBPQuoqtLr+OzJFdNOhLo0hrjkM=';
 
   bool debug;
   List<String> debugLog = [];
