@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dartnissanconnectna/dartnissanconnectna.dart';
+import 'package:dartnissanconnectna/src/firebase_remote_config.dart';
 import 'package:dartnissanconnectna/src/nissanconnect_response.dart';
 import 'package:dartnissanconnectna/src/nissanconnect_vehicle.dart';
 import 'package:http/http.dart' as http;
@@ -10,16 +12,16 @@ class NissanConnectSession {
       'https://icm.infinitiusa.com/NissanConnectEVProd/rest/';
   final String apiKey =
       'bJG8LvpcRAAOrVQ8GByIzWkR4n993iccFtKNs1sn+gheOFGnT6ABaR6cvclCXetW';
-  final String userAgentKey = 'BHeqw+ZnuD4IASSbDtaVfmHgjm2uASYCaraB0kqgOcY=';
 
   bool debug;
   List<String> debugLog = [];
 
-  String? username;
-  String? password;
+  late String username;
+  late String password;
   String? authToken;
   String? authCookie;
   String? userAgent;
+  late String userAgentKey;
 
   late NissanConnectVehicle vehicle;
   late List<NissanConnectVehicle> vehicles;
@@ -36,7 +38,10 @@ class NissanConnectSession {
           'NissanConnect API; logging in and trying request again: $response');
 
       await login(
-          username: username!, password: password!, userAgent: userAgent);
+        username: username,
+        password: password,
+        userAgent: userAgent,
+      );
 
       response =
           await request(endpoint: endpoint, method: method, params: params);
@@ -91,14 +96,27 @@ class NissanConnectSession {
         response.statusCode, response.headers, jsonData);
   }
 
-  Future<NissanConnectVehicle> login(
-      {required String username,
-      required String password,
-      String countryCode = 'US',
-      String? userAgent}) async {
+  Future<NissanConnectVehicle> login({
+    required String username,
+    required String password,
+    String countryCode = 'US',
+    String? userAgent,
+  }) async {
     this.username = username;
     this.password = password;
     this.userAgent = userAgent;
+
+    /// Load the Firebase Remote Config
+    /// These values can be extracted from the official app
+    var firebaseRemoteConfig = await FirebaseRemoteConfig.load(
+      appId: '1:25831104952:android:364bc23813c51afc',
+      projectId: '25831104952',
+      apiKey: 'AIzaSyBOFbpZI5N9zjx60DWWHETK52P0cTJ2RmM',
+    );
+
+    /// It looks peculiar but the "welcome_message" is the key-value used
+    /// for the value of the User-Agent-Key header
+    this.userAgentKey = firebaseRemoteConfig['welcome_message'];
 
     NissanConnectResponse response =
         await request(endpoint: 'auth/authenticationForAAS', params: {
