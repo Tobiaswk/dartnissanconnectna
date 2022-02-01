@@ -108,11 +108,7 @@ class NissanConnectSession {
 
     /// Load the Firebase Remote Config
     /// These values can be extracted from the official app
-    var firebaseRemoteConfig = await FirebaseRemoteConfig.load(
-      appId: '1:25831104952:android:364bc23813c51afc',
-      projectId: '25831104952',
-      apiKey: 'AIzaSyBOFbpZI5N9zjx60DWWHETK52P0cTJ2RmM',
-    );
+    var firebaseRemoteConfig = await FirebaseRemoteConfig.load();
 
     /// It looks peculiar but the "welcome_message" is the key-value used
     /// for the value of the User-Agent-Key header
