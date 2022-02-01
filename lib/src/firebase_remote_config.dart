@@ -11,6 +11,7 @@ class FirebaseRemoteConfig {
     var appId = '1:25831104952:android:364bc23813c51afc';
     var projectId = '25831104952';
     var apiKey = 'AIzaSyBOFbpZI5N9zjx60DWWHETK52P0cTJ2RmM';
+    var androidPackage = 'com.aqsmartphone.android.nissan';
     var androidCert = '94A5A06227EDB35F48BCA5092C2C091AD44C76EE';
 
     var firebaseRemoteConfigResponse = await http.post(
@@ -19,7 +20,7 @@ class FirebaseRemoteConfig {
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': '$apiKey',
-          'X-Android-Package': 'com.aqsmartphone.android.nissan',
+          'X-Android-Package': '$androidPackage',
           'X-Android-Cert': '$androidCert',
         },
         body: json.encode({
