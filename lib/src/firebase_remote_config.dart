@@ -16,7 +16,7 @@ class FirebaseRemoteConfig {
 
     var firebaseRemoteConfigResponse = await http.post(
         Uri.parse(
-            'https://firebaseremoteconfig.googleapis.com/v1/projects/$projectId/namespaces/firebase:fetch?key=$apiKey'),
+            'https://firebaseremoteconfig.googleapis.com/v1/projects/$projectId/namespaces/firebase:fetch'),
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': '$apiKey',
