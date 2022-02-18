@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dartnissanconnectna/dartnissanconnectna.dart';
-import 'package:dartnissanconnectna/src/firebase_remote_config.dart';
 import 'package:dartnissanconnectna/src/nissanconnect_response.dart';
 import 'package:dartnissanconnectna/src/nissanconnect_vehicle.dart';
 import 'package:http/http.dart' as http;
@@ -106,13 +105,11 @@ class NissanConnectSession {
     this.password = password;
     this.userAgent = userAgent;
 
-    /// Load the Firebase Remote Config
-    /// These values can be extracted from the official app
-    var firebaseRemoteConfig = await FirebaseRemoteConfig.load();
+    /// We grab the User-Agent-Key from this projects Git repo
+    var userAgentKey = await http.get(Uri.parse(
+        'https://gitlab.com/tobiaswkjeldsen/dartnissanconnectna/-/raw/master/user_agent_key'));
 
-    /// It looks peculiar but the "welcome_message" is the key-value used
-    /// for the value of the User-Agent-Key header
-    this.userAgentKey = firebaseRemoteConfig['welcome_message'];
+    this.userAgentKey = userAgentKey.body;
 
     NissanConnectResponse response =
         await request(endpoint: 'auth/authenticationForAAS', params: {
